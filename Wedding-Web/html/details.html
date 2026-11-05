@@ -1,0 +1,1200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wedding Details</title>
+
+<style>
+
+/* =====================================
+   GENERAL PAGE SETTINGS
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    font-family: Georgia, serif;
+    background: #fff8fa;
+    background-image: url('../images/namsan.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.wedding-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 30px 20px 45px;
+}
+
+/* =====================================
+   MAIN HEADING
+===================================== */
+
+.wedding-page h1 {
+    text-align: center;
+    color: #89566b;
+    font-size: 38px;
+    font-weight: normal;
+    margin: 10px 0;
+}
+
+.page-hint {
+    text-align: center;
+    color: #89566b;
+    font-size: 15px;
+    margin: 12px 0 30px;
+}
+
+/* =====================================
+   CARDS GRID
+===================================== */
+
+.cards {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto 40px;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 30px;
+    align-items: start;
+}
+
+/* =====================================
+   INDIVIDUAL CARDS
+===================================== */
+
+.card {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 380px;
+    height: auto;
+
+    padding: 30px 25px;
+    margin: 0;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: 3px solid white;
+    border-radius: 18px;
+
+    box-shadow: 0 7px 22px rgba(0,0,0,0.2);
+
+    color: white;
+    text-align: center;
+
+    cursor: pointer;
+
+    overflow: visible;
+
+    transition: box-shadow 0.3s ease;
+}
+
+/* =====================================
+   WEDDING DAY CARD
+   PINK CHERRY BACKGROUND
+===================================== */
+
+.wedding-card {
+    background-image: url('../images/pinkcherry.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* =====================================
+   HOMECOMING DAY CARD
+   RED CHERRY BACKGROUND
+===================================== */
+
+.homecoming-card {
+    background-image: url('../images/redcherry.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* =====================================
+   DARK OVERLAY
+===================================== */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: rgba(25, 15, 22, 0.48);
+
+    border-radius: 15px;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* KEEP CARD CONTENT ABOVE OVERLAY */
+
+.card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.card:hover {
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+/* =====================================
+   CARD HEADINGS AND TEXT
+===================================== */
+
+.card h2 {
+    color: white;
+    font-size: 29px;
+    font-weight: normal;
+
+    margin: 5px 0 25px;
+
+    text-shadow: 1px 2px 5px black;
+}
+
+.card p {
+    color: white;
+    font-size: 16px;
+    line-height: 1.8;
+
+    margin: 14px 0;
+
+    overflow-wrap: anywhere;
+}
+
+.card .date {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+/* =====================================
+   LOCATION BUTTON
+===================================== */
+
+.location-link {
+    display: inline-block;
+
+    margin-top: 10px;
+    padding: 11px 22px;
+
+    background: white;
+    color: #89566b;
+
+    border-radius: 25px;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.location-link:hover {
+    background: #89566b;
+    color: white;
+}
+
+/* =====================================
+   EXPANDED CARD DETAILS
+===================================== */
+
+.extra-details {
+    display: none;
+
+    width: 100%;
+
+    margin-top: 25px;
+    padding: 20px 15px;
+
+    border-top: 1px solid rgba(255,255,255,0.8);
+
+    background: rgba(255,255,255,0.12);
+
+    border-radius: 12px;
+}
+
+.card.expanded .extra-details {
+    display: block;
+}
+
+.card.expanded {
+    min-height: 380px;
+    overflow: visible;
+}
+
+.extra-details h3 {
+    color: #ffe4ec;
+    font-size: 22px;
+    font-weight: normal;
+
+    margin: 25px 0 12px;
+}
+
+.extra-details h3:first-child {
+    margin-top: 5px;
+}
+
+/* =====================================
+   WEDDING COLOUR CODES
+===================================== */
+
+.dress-code {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    text-align: center;
+}
+
+.dress-code h2 {
+    color: #89566b;
+    font-size: 28px;
+
+    margin-bottom: 22px;
+}
+
+.dress-cards {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.dress-card {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+
+.dress-card h3 {
+    color: #89566b;
+    margin-bottom: 15px;
+}
+
+.dress-card p {
+    color: #333;
+    line-height: 1.8;
+    margin: 10px 0;
+}
+
+/* =====================================
+   COLOUR CIRCLES
+===================================== */
+
+.colour {
+    display: inline-block;
+
+    width: 17px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    vertical-align: middle;
+
+    border: 1px solid #aaa;
+
+    margin-right: 6px;
+}
+
+.pink {
+    background: #f6dce5;
+}
+
+.blue {
+    background: #24558b;
+}
+
+.gold {
+    background: #eee4c8;
+}
+
+.black {
+    background: #000000;
+}
+
+.red {
+    background: #d00000;
+}
+
+/* =====================================
+   HOMECOMING PHOTO
+===================================== */
+
+.homecoming-image {
+    display: block;
+
+    width: 100%;
+    max-width: 430px;
+
+    height: auto;
+    max-height: 350px;
+
+    object-fit: contain;
+
+    border: 3px solid white;
+    border-radius: 12px;
+
+    margin: 20px auto;
+
+    background: white;
+}
+
+/* =====================================
+   WEDDING PHOTO
+===================================== */
+
+.wedding-image {
+    display: block;
+
+    width: 100%;
+    max-width: 430px;
+
+    height: auto;
+    max-height: 350px;
+
+    object-fit: contain;
+
+    border: 3px solid white;
+    border-radius: 12px;
+
+    margin: 20px auto;
+
+    background: white;
+}
+
+/* =====================================
+   IMAGE UPLOAD
+===================================== */
+
+.image-upload {
+    margin: 20px auto;
+}
+
+.image-upload label {
+    display: block;
+
+    color: white;
+
+    margin-bottom: 12px;
+}
+
+.image-upload input {
+    width: 100%;
+    max-width: 300px;
+
+    padding: 10px;
+
+    background: white;
+    color: black;
+
+    border-radius: 8px;
+}
+
+/* =====================================
+   RSVP SECTION
+===================================== */
+
+.rsvp-section {
+    width: 100%;
+    max-width: 750px;
+
+    margin: 35px auto;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+
+.rsvp-section h2 {
+    color: #89566b;
+    margin-bottom: 15px;
+}
+
+.rsvp-section p {
+    color: #333;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.rsvp-number {
+    display: inline-block;
+
+    padding: 12px 20px;
+    margin: 8px;
+
+    background: #9d536e;
+    color: white;
+
+    border-radius: 25px;
+
+    text-decoration: none;
+}
+
+.rsvp-number:hover {
+    background: #71364c;
+}
+
+/* =====================================
+   BACK AND NEXT BUTTONS
+===================================== */
+
+.button-container {
+    display: flex;
+
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin: 30px auto 10px;
+}
+
+.button-container button {
+    background: #9d536e;
+    color: white;
+
+    border: none;
+    border-radius: 25px;
+
+    padding: 12px 32px;
+
+    cursor: pointer;
+
+    font-family: Georgia, serif;
+    font-size: 16px;
+
+    transition: 0.3s;
+}
+
+.button-container button:hover {
+    background: #71364c;
+}
+
+/* =====================================
+   TABLET AND MOBILE RESPONSIVE
+===================================== */
+
+@media screen and (max-width: 700px) {
+
+    body {
+        background-attachment: scroll;
+    }
+
+    .wedding-page {
+        padding: 20px 14px 35px;
+    }
+
+    .wedding-page h1 {
+        font-size: 30px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+
+        max-width: 480px;
+
+        gap: 22px;
+    }
+
+    .card {
+        min-height: 320px;
+        padding: 25px 18px;
+    }
+
+    .card h2 {
+        font-size: 25px;
+    }
+
+    .card p {
+        font-size: 15px;
+    }
+
+    .extra-details h3 {
+        font-size: 20px;
+    }
+
+    .dress-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .dress-code h2 {
+        font-size: 24px;
+    }
+
+    .rsvp-section {
+        padding: 20px 12px;
+    }
+
+    .homecoming-image {
+        max-width: 100%;
+    }
+
+    .wedding-image {
+        max-width: 100%;
+    }
+
+}
+
+/* =====================================
+   SMALL MOBILE SCREENS
+===================================== */
+
+@media screen and (max-width: 380px) {
+
+    .wedding-page h1 {
+        font-size: 26px;
+    }
+
+    .card {
+        padding: 22px 14px;
+    }
+
+    .card h2 {
+        font-size: 23px;
+    }
+
+    .location-link {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    .rsvp-number {
+        padding: 10px 14px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wedding-page">
+
+    <!-- PAGE HEADING -->
+
+    <h1>Wedding Details</h1>
+
+    <p class="page-hint">
+        Click on each card to see more details.
+    </p>
+
+
+    <!-- =================================
+         WEDDING AND HOMECOMING CARDS
+    ================================== -->
+
+    <div class="cards">
+
+
+        <!-- =================================
+             WEDDING DAY CARD
+        ================================== -->
+
+        <div class="card wedding-card"
+             id="page1"
+             onclick="expandCard(this)">
+
+            <h2>Wedding Day</h2>
+
+            <p class="date">
+                19th January 2025
+            </p>
+
+            <p>
+                Auspicious Time for the Wedding
+                Ceremony: 9:45 AM
+            </p>
+
+            <p>
+                The Royal Classic Resort, Kandy
+            </p>
+
+            <p>
+
+                <a
+                    href="https://www.google.com/maps/dir//16%2F5+Arangala+Natharampotha,+20000/@7.2872193,80.5900373,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3ae367af28652f7b:0xdf89885e2aa13b98!2m2!1d80.6724392!2d7.2872268?entry=ttu"
+
+                    target="_blank"
+                    rel="noopener"
+
+                    class="location-link"
+
+                    onclick="event.stopPropagation()">
+
+                    View Location on Map
+
+                </a>
+
+            </p>
+
+
+            <!-- EXPANDED WEDDING DETAILS -->
+
+            <div class="extra-details">
+
+                <h3>Poruwa Ceremony</h3>
+
+                <p>
+                    Auspicious Poruwa Time: 9:45 AM
+                </p>
+
+
+                <h3>Bride's Side Dress Code</h3>
+
+                <p>
+                    Ladies: Pale Pink
+                </p>
+
+                <p>
+                    Gentlemen: Full formal suits with
+                    flower boutonniere and cufflinks.
+                </p>
+
+
+                <h3>Groom's Side Dress Code</h3>
+
+                <p>
+                    Gentlemen: Blue
+                </p>
+
+                <p>
+                    Ladies: Goldish White
+                </p>
+
+
+                <h3>Venue</h3>
+
+                <p>
+                    The Royal Classic Resort, Kandy
+                </p>
+
+
+                <!-- WEDDING MEMORIES -->
+
+                <h3>Wedding Memories</h3>
+
+                <p>
+                    Add a special photograph for
+                    our Wedding Celebration.
+                </p>
+
+
+                <!-- WEDDING PHOTO -->
+
+                <img
+                    id="weddingPhoto"
+
+                    class="wedding-image"
+
+                    src="../images/wed.jpeg"
+
+                    alt="Wedding Photo"
+
+                    onerror="this.style.display='none';"
+                >
+
+
+                <!-- UPLOAD WEDDING PHOTO -->
+
+                <div class="image-upload">
+
+                    <input
+
+                        type="file"
+
+                        id="weddingUpload"
+
+                        accept="image/*"
+
+                        onclick="event.stopPropagation()"
+
+                        onchange="previewWeddingImage(event)"
+
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             HOMECOMING DAY CARD
+        ================================== -->
+
+        <div class="card homecoming-card"
+             id="page2"
+             onclick="expandCard(this)">
+
+            <h2>Homecoming Day</h2>
+
+            <p class="date">
+                22nd January 2025
+            </p>
+
+            <p>
+                Homecoming Night Celebration
+                will be from 6:30 PM
+            </p>
+
+            <p>
+                At Our Home
+            </p>
+
+            <p>
+
+                <a
+                    href="https://www.google.com/maps/place/Your+Home+Location"
+
+                    target="_blank"
+                    rel="noopener"
+
+                    class="location-link"
+
+                    onclick="event.stopPropagation()">
+
+                    View Location on Map
+
+                </a>
+
+            </p>
+
+
+            <!-- EXPANDED HOMECOMING DETAILS -->
+
+            <div class="extra-details">
+
+                <h3>Homecoming Celebration</h3>
+
+                <p>
+                    We look forward to celebrating
+                    this wonderful occasion with you.
+                </p>
+
+
+                <h3>Homecoming Dress Code</h3>
+
+                <p>
+
+                    Bride's Side:
+
+                    <span class="colour black"></span>
+
+                    Black
+
+                </p>
+
+                <p>
+
+                    Groom's Side:
+
+                    <span class="colour red"></span>
+
+                    Red
+
+                </p>
+
+
+                <h3>Homecoming Memories</h3>
+
+                <p>
+                    Add a special photograph for
+                    our Homecoming Celebration.
+                </p>
+
+
+                <!-- HOMECOMING PHOTO -->
+
+                <img
+                    id="homecomingPhoto"
+
+                    class="homecoming-image"
+
+                    src="../images/hmcing.jpeg"
+
+                    alt="Homecoming Photo"
+
+                    onerror="this.style.display='none';"
+                >
+
+
+                <!-- UPLOAD PHOTO -->
+
+                <div class="image-upload">
+
+                    <input
+
+                        type="file"
+
+                        id="homecomingUpload"
+
+                        accept="image/*"
+
+                        onclick="event.stopPropagation()"
+
+                        onchange="previewHomecomingImage(event)"
+
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================
+         WEDDING COLOUR CODES
+    ================================== -->
+
+    <section class="dress-code">
+
+        <h2>Wedding Colour Codes</h2>
+
+        <div class="dress-cards">
+
+
+            <!-- BRIDE SIDE -->
+
+            <div class="dress-card">
+
+                <h3>Bride's Side</h3>
+
+                <p>
+
+                    <span class="colour pink"></span>
+
+                    <strong>Ladies:</strong> Pale Pink
+
+                </p>
+
+                <p>
+
+                    <strong>Gentlemen:</strong>
+
+                    Full suits with flower boutonniere
+                    and cufflinks.
+
+                </p>
+
+            </div>
+
+
+            <!-- GROOM SIDE -->
+
+            <div class="dress-card">
+
+                <h3>Groom's Side</h3>
+
+                <p>
+
+                    <span class="colour blue"></span>
+
+                    <strong>Gentlemen:</strong> Blue
+
+                </p>
+
+                <p>
+
+                    <span class="colour gold"></span>
+
+                    <strong>Ladies:</strong> Goldish White
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================
+         HOMECOMING COLOUR CODES
+    ================================== -->
+
+    <section class="dress-code">
+
+        <h2>Homecoming Colour Codes</h2>
+
+        <div class="dress-cards">
+
+
+            <!-- BRIDE SIDE -->
+
+            <div class="dress-card">
+
+                <h3>Bride's Side</h3>
+
+                <p>
+
+                    <span class="colour black"></span>
+
+                    Black
+
+                </p>
+
+            </div>
+
+
+            <!-- GROOM SIDE -->
+
+            <div class="dress-card">
+
+                <h3>Groom's Side</h3>
+
+                <p>
+
+                    <span class="colour red"></span>
+
+                    Red
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================
+         RSVP SECTION
+    ================================== -->
+
+    <section class="rsvp-section">
+
+        <h2>RSVP</h2>
+
+        <p>
+
+            Kindly confirm your attendance.
+
+            We look forward to celebrating with you!
+
+        </p>
+
+
+        <a
+            href="tel:0716824368"
+            class="rsvp-number">
+
+            0716824368
+
+        </a>
+
+
+        <a
+            href="tel:0715251086"
+            class="rsvp-number">
+
+            0715251086
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =================================
+         BACK AND NEXT NAVIGATION
+    ================================== -->
+
+    <div class="button-container">
+
+        <button
+            onclick="window.location.href='photos.html'">
+
+            Back
+
+        </button>
+
+
+        <button
+            onclick="window.location.href='signature_board.html'">
+
+            Next
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================
+     JAVASCRIPT
+===================================== -->
+
+<script>
+
+/* =====================================
+   EXPAND ONE CARD AT A TIME
+===================================== */
+
+function expandCard(selectedCard) {
+
+    document.querySelectorAll('.cards .card').forEach(card => {
+
+        if (card === selectedCard) {
+
+            card.classList.toggle('expanded');
+
+        } else {
+
+            card.classList.remove('expanded');
+
+        }
+
+    });
+
+}
+
+
+/* =====================================
+   WEDDING IMAGE PREVIEW
+===================================== */
+
+function previewWeddingImage(event) {
+
+    event.stopPropagation();
+
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+
+        alert('Please select a valid image file.');
+
+        event.target.value = '';
+
+        return;
+
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const image = document.getElementById('weddingPhoto');
+
+        image.src = e.target.result;
+
+        image.style.display = 'block';
+
+    };
+
+    reader.onerror = function() {
+
+        alert('Unable to load this image. Please try another image.');
+
+    };
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =====================================
+   HOMECOMING IMAGE PREVIEW
+===================================== */
+
+function previewHomecomingImage(event) {
+
+    event.stopPropagation();
+
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+
+        alert('Please select a valid image file.');
+
+        event.target.value = '';
+
+        return;
+
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const image = document.getElementById('homecomingPhoto');
+
+        image.src = e.target.result;
+
+        image.style.display = 'block';
+
+    };
+
+    reader.onerror = function() {
+
+        alert('Unable to load this image. Please try another image.');
+
+    };
+
+    reader.readAsDataURL(file);
+
+}
+
+</script>
+
+</body>
+
+</html>

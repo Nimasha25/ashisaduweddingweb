@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Signature Board</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        /* GENERAL BODY */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            margin: 0;
+            padding: 30px 15px;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-image: url('../images/namsan.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+
+            margin: auto;
+            padding: 35px;
+
+            background: rgba(255, 255, 255, 0.90);
+
+            border: 2px solid white;
+            border-radius: 18px;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+
+            backdrop-filter: blur(5px);
+        }
+
+        /* HEADING */
+
+        h1 {
+            text-align: center;
+
+            color: #89566b;
+
+            font-size: 30px;
+            font-weight: normal;
+
+            line-height: 1.5;
+
+            margin: 0 0 25px;
+        }
+
+        /* FORM */
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+
+            width: 100%;
+
+            resize: none;
+
+            padding: 14px 16px;
+
+            margin-bottom: 18px;
+
+            border: 1px solid #d9b8c5;
+            border-radius: 9px;
+
+            font-family: Georgia, serif;
+            font-size: 16px;
+
+            color: #444;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            outline: none;
+
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+
+            border-color: #9d536e;
+
+            box-shadow: 0 0 7px rgba(157, 83, 110, 0.25);
+        }
+
+        textarea {
+            height: 130px;
+            line-height: 1.6;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #999;
+        }
+
+        /* HIDE DEFAULT FILE INPUT */
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* OPEN GALLERY BUTTON */
+
+        #uploadButton {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin: 5px 0 20px;
+
+            background: #89566b;
+            color: white;
+
+            border: none;
+            border-radius: 25px;
+
+            cursor: pointer;
+
+            font-family: Georgia, serif;
+            font-size: 16px;
+
+            transition: 0.3s;
+        }
+
+        #uploadButton:hover {
+            background: #71364c;
+        }
+
+        /* PHOTO PREVIEW AREA */
+
+        .preview-container {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        /* INDIVIDUAL IMAGE */
+
+        .image-preview {
+
+            display: block;
+
+            width: 100%;
+            height: 130px;
+
+            object-fit: cover;
+
+            border: 3px solid white;
+            border-radius: 10px;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* IMAGE PREVIEW BOX */
+
+        .preview-item {
+            position: relative;
+            width: 100%;
+        }
+
+        /* REMOVE IMAGE BUTTON */
+
+        .remove-image {
+
+            position: absolute;
+
+            top: 5px;
+            right: 5px;
+
+            width: 27px;
+            height: 27px;
+
+            padding: 0;
+            margin: 0;
+
+            background: #b83250;
+            color: white;
+
+            border: none;
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .remove-image:hover {
+            background: #801b34;
+        }
+
+        /* SUBMIT BUTTON */
+
+        input[type="submit"] {
+
+            width: 100%;
+
+            padding: 15px;
+
+            background: #9d536e;
+            color: white;
+
+            border: none;
+            border-radius: 25px;
+
+            cursor: pointer;
+
+            font-family: Georgia, serif;
+            font-size: 17px;
+
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #71364c;
+        }
+
+        /* MOBILE RESPONSIVE */
+
+        @media screen and (max-width: 600px) {
+
+            body {
+                padding: 20px 12px;
+                background-attachment: scroll;
+            }
+
+            .container {
+                padding: 25px 18px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .preview-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Share Some Special Moments of Us</h1>
+
+        <form
+            id="signatureForm"
+            action="../php/process_signature.php"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+            >
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+            >
+
+            <textarea
+                name="message"
+                placeholder="Your message..."
+                required
+            ></textarea>
+
+
+            <input
+                type="hidden"
+                name="photo"
+                id="photoData"
+            >
+
+            <!-- PHOTO PREVIEWS -->
+
+            <div
+                id="previewContainer"
+                class="preview-container"
+            ></div>
+
+
+            <!-- OPEN GALLERY BUTTON -->
+
+            <button
+                type="button"
+                id="uploadButton"
+            >
+
+                Open Gallery
+
+            </button>
+
+
+            <input
+                type="file"
+                id="fileInput"
+                name="fileInput[]"
+                accept="image/*"
+                multiple
+            >
+
+
+            <!-- SUBMIT BUTTON -->
+
+            <input
+                type="submit"
+                value="Submit"
+            >
+
+        </form>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        const photoData = document.getElementById('photoData');
+
+        const uploadButton = document.getElementById('uploadButton');
+
+        const fileInput = document.getElementById('fileInput');
+
+        const previewContainer = document.getElementById('previewContainer');
+
+
+        /* OPEN GALLERY */
+
+        uploadButton.addEventListener('click', () => {
+
+            fileInput.click();
+
+        });
+
+
+        /* HANDLE SELECTED IMAGES */
+
+        fileInput.addEventListener('change', (event) => {
+
+            const files = event.target.files;
+
+            previewContainer.innerHTML = '';
+
+            for (let i = 0; i < files.length; i++) {
+
+                const file = files[i];
+
+                if (!file.type.startsWith('image/')) {
+                    continue;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    const previewDiv = document.createElement('div');
+
+                    previewDiv.classList.add('preview-item');
+
+
+                    /* CREATE IMAGE */
+
+                    const imageElement = document.createElement('img');
+
+                    imageElement.src = e.target.result;
+
+                    imageElement.classList.add('image-preview');
+
+
+                    /* CREATE REMOVE BUTTON */
+
+                    const removeButton = document.createElement('button');
+
+                    removeButton.type = 'button';
+
+                    removeButton.classList.add('remove-image');
+
+                    removeButton.textContent = 'X';
+
+
+                    removeButton.onclick = function() {
+
+                        previewDiv.remove();
+
+                        updatePhotoData();
+
+                    };
+
+
+                    /* ADD ELEMENTS */
+
+                    previewDiv.appendChild(imageElement);
+
+                    previewDiv.appendChild(removeButton);
+
+                    previewContainer.appendChild(previewDiv);
+
+
+                    updatePhotoData();
+
+                };
+
+
+                reader.readAsDataURL(file);
+
+            }
+
+        });
+
+
+        /* UPDATE HIDDEN PHOTO DATA */
+
+        function updatePhotoData() {
+
+            const images = previewContainer.querySelectorAll('.image-preview');
+
+            const imageDataArray = Array.from(images).map(img => img.src);
+
+            photoData.value = JSON.stringify(imageDataArray);
+
+        }
+
+    </script>
+
+</body>
+
+</html>

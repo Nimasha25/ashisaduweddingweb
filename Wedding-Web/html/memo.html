@@ -1,0 +1,870 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Memo - Special Moments</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)),
+                url("../images/namsan.png");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* MAIN CONTAINER */
+
+        .main-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 50px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* HEADER */
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            letter-spacing: 4px;
+            color: white;
+            text-shadow: 2px 2px 10px black;
+            margin-bottom: 15px;
+        }
+
+        .header h2 {
+            font-size: 25px;
+            font-weight: normal;
+            color: #ffe4e1;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: white;
+        }
+
+        .heart {
+            font-size: 30px;
+            color: pink;
+            margin: 15px;
+        }
+
+        /* MEMORY CARDS */
+
+        .memory-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .memory-card {
+            background: rgba(255,255,255,0.93);
+            color: #444;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* CARD PHOTOS */
+
+        .memory-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            cursor: zoom-in;
+            transition: transform 0.4s;
+        }
+
+        .memory-card img:hover {
+            transform: scale(1.04);
+        }
+
+        .memory-content {
+            padding: 22px;
+            text-align: center;
+        }
+
+        .memory-content h3 {
+            color: #a64d79;
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .memory-content .date {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .memory-content p {
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .click-text {
+            color: #b45b83;
+            font-size: 13px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* WEDDING DAY CARD */
+
+        .wedding-card {
+            grid-column: 1 / -1;
+            background: rgba(255,235,240,0.96);
+            border: 3px solid #e9a8bd;
+        }
+
+        .wedding-card img {
+            height: 350px;
+        }
+
+        .wedding-card .memory-content h3 {
+            font-size: 32px;
+            color: #b34470;
+        }
+
+        /* LARGE PHOTO VIEW */
+
+        .photo-modal {
+            display: none;
+            position: fixed;
+            z-index: 10001;
+            inset: 0;
+            background: rgba(0,0,0,0.94);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .photo-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 95vw;
+            max-height: 90vh;
+            text-align: center;
+            animation: zoomIn 0.35s ease;
+        }
+
+        .modal-content img {
+            max-width: 90vw;
+            max-height: 82vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border: 5px solid white;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .modal-caption {
+            color: white;
+            font-size: 22px;
+            margin-top: 15px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            font-size: 45px;
+            color: white;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .close-modal:hover {
+            color: pink;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* BACK AND NEXT NAVIGATION BUTTONS */
+
+        .page-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin: 45px auto 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, #d76b91, #a64d79);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 35px;
+            font-size: 18px;
+            font-family: Georgia, serif;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(135deg, #a64d79, #80375c);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 50px 10px 20px;
+            color: white;
+            font-size: 18px;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        footer .footer-heart {
+            font-size: 30px;
+            color: pink;
+        }
+
+        /* SNOW EFFECT */
+
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10000;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -30px;
+            color: white;
+            text-shadow: 0 0 5px white;
+            animation: snowfall linear forwards;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translate3d(0, -10vh, 0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: translate3d(70px, 110vh, 0) rotate(360deg);
+                opacity: 0.2;
+            }
+        }
+
+        /* RESPONSIVE DESIGN */
+
+        @media (max-width: 900px) {
+
+            .memory-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .main-container {
+                width: 92%;
+                padding-top: 35px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header h2 {
+                font-size: 20px;
+            }
+
+            .memory-container {
+                grid-template-columns: 1fr;
+            }
+
+            .memory-card img {
+                height: 230px;
+            }
+
+            .wedding-card {
+                grid-column: auto;
+            }
+
+            .wedding-card img {
+                height: 260px;
+            }
+
+            .modal-content {
+                max-width: 100%;
+            }
+
+            .modal-content img {
+                max-width: 90vw;
+                max-height: 75vh;
+            }
+
+            .close-modal {
+                right: 20px;
+                top: 10px;
+            }
+
+            /* MOBILE NAVIGATION */
+
+            .page-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-button {
+                width: 85%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SNOW CONTAINER -->
+
+    <div class="snow-container" id="snow-container"></div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-container">
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>Our Memo</h1>
+
+            <h2>Our Journey of Love</h2>
+
+            <div class="heart">♥ ♥ ♥</div>
+
+            <p>
+                Every beautiful moment has a story.
+                Every memory has a special place in our hearts.
+                Here are some unforgettable moments from our journey
+                towards our wedding day.
+            </p>
+
+        </div>
+
+
+        <!-- MEMORY CARDS -->
+
+        <div class="memory-container">
+
+            <!-- MEMORY 1 -->
+
+            <div class="memory-card">
+
+                <img src="../images/1.jpeg"
+                     alt="Our First Meeting"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Our First Meeting</h3>
+
+                    <div class="date">A Beautiful Beginning</div>
+
+                    <p>
+                        The moment our journey began.
+                        A simple meeting that became
+                        the beginning of something beautiful.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMORY 2 -->
+
+            <div class="memory-card">
+
+                <img src="../images/2.jpeg"
+                     alt="Our Special Moments"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Our Special Moments</h3>
+
+                    <div class="date">Beautiful Memories</div>
+
+                    <p>
+                        Every smile, every conversation,
+                        and every little moment made
+                        our relationship more special.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMORY 3 -->
+
+            <div class="memory-card">
+
+                <img src="../images/3.jpeg"
+                     alt="Our Happy Days"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Our Happy Days</h3>
+
+                    <div class="date">Moments to Remember</div>
+
+                    <p>
+                        The happiest memories are made
+                        when we are together.
+                        These moments will stay forever.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMORY 4 -->
+
+            <div class="memory-card">
+
+                <img src="../images/4.jpeg"
+                     alt="Our Journey Together"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Our Journey Together</h3>
+
+                    <div class="date">Growing Together</div>
+
+                    <p>
+                        Through every experience,
+                        we learned to understand,
+                        support and love each other.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMORY 5 -->
+
+            <div class="memory-card">
+
+                <img src="../images/5.jpeg"
+                     alt="Wedding Preparations"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Wedding Preparations</h3>
+
+                    <div class="date">Getting Ready for Forever</div>
+
+                    <p>
+                        Excitement, happiness and countless
+                        preparations as we get ready
+                        for our beautiful new beginning.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMORY 6 -->
+
+            <div class="memory-card">
+
+                <img src="../images/6.jpeg"
+                     alt="A Moment Before Forever"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Almost Happy Moments</h3>
+
+                    <div class="date">Counting Every Moment</div>
+
+                    <p>
+                        The excitement of beginning
+                        a new chapter together.
+                        Our forever is just around the corner.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMORY 7 -->
+
+            <div class="memory-card">
+
+                <img src="../images/7.jpeg"
+                     alt="Almost Our Auspicious Day"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Almost Our Auspicious Day</h3>
+
+                    <div class="date">Counting Every Moment</div>
+
+                    <p>
+                        The excitement of beginning
+                        a new chapter together.
+                        Our forever is just around the corner.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+            <div class="memory-card">
+
+                <img src="../images/8.jpeg"
+                     alt="Almost Our Special Day"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Almost Our Special Day</h3>
+
+                    <div class="date">Counting Every Moment</div>
+
+                    <p>
+                        The excitement of beginning
+                        a new chapter together.
+                        Our forever is just around the corner.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="memory-card">
+
+                <img src="../images/crd.jpeg"
+                     alt="Our Invitation Card"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Our Invitation Card</h3>
+
+                    <div class="date">Counting Every Moment</div>
+
+                    <p>
+                        The excitement of beginning
+                        a new chapter together.
+                        Our forever is just around the corner.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEDDING DAY -->
+
+            <div class="memory-card wedding-card">
+
+                <img src="../images/webd.jpeg"
+                     alt="Our Wedding Day"
+                     onclick="openPhoto(this)">
+
+                <div class="memory-content">
+
+                    <h3>Our Wedding Day ♥</h3>
+
+                    <div class="date">
+                        19th January 2025
+                    </div>
+
+                    <p>
+                        The day two hearts became one.
+                        A beautiful celebration of love,
+                        promises and a lifetime of togetherness.
+                    </p>
+
+                    <div class="click-text">
+                        Click the photo to enlarge ♥
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BACK AND NEXT NAVIGATION BUTTONS -->
+
+        <div class="page-navigation">
+
+            <a href="story.html" class="nav-button">
+                ← Back
+            </a>
+
+            <a href="signature_board.html" class="nav-button">
+                Next ❤️ →
+            </a>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <div class="footer-heart">♥</div>
+
+            <p>Two Hearts. One Love. One Forever.</p>
+
+            <p>Our beautiful story continues...</p>
+
+        </footer>
+
+    </div>
+
+
+    <!-- LARGE PHOTO POPUP -->
+
+    <div class="photo-modal"
+         id="photoModal"
+         onclick="closePhoto(event)">
+
+        <span class="close-modal"
+              onclick="closePhoto(event)">
+            &times;
+        </span>
+
+        <div class="modal-content">
+
+            <img id="enlargedPhoto"
+                 src=""
+                 alt="Enlarged memory">
+
+            <div class="modal-caption"
+                 id="photoCaption"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        /* OPEN LARGE PHOTO */
+
+        function openPhoto(image) {
+
+            const modal = document.getElementById("photoModal");
+
+            const enlargedPhoto =
+                document.getElementById("enlargedPhoto");
+
+            const caption =
+                document.getElementById("photoCaption");
+
+            enlargedPhoto.src = image.src;
+
+            caption.textContent =
+                image.closest(".memory-card")
+                     .querySelector("h3").textContent;
+
+            modal.classList.add("active");
+
+            document.body.style.overflow = "hidden";
+
+        }
+
+
+        /* CLOSE PHOTO */
+
+        function closePhoto(event) {
+
+            if (
+                event.target.id === "photoModal" ||
+                event.target.classList.contains("close-modal")
+            ) {
+
+                document.getElementById("photoModal")
+                    .classList.remove("active");
+
+                document.body.style.overflow = "auto";
+
+            }
+
+        }
+
+
+        /* CLOSE WITH ESCAPE KEY */
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+
+                document.getElementById("photoModal")
+                    .classList.remove("active");
+
+                document.body.style.overflow = "auto";
+
+            }
+
+        });
+
+
+        /* SNOW FALLING EFFECT */
+
+        const snowContainer =
+            document.getElementById("snow-container");
+
+        function createSnowflake() {
+
+            const snowflake = document.createElement("div");
+
+            snowflake.className = "snowflake";
+
+            snowflake.textContent = "❄";
+
+            snowflake.style.left =
+                Math.random() * 100 + "vw";
+
+            snowflake.style.fontSize =
+                (Math.random() * 12 + 8) + "px";
+
+            const duration = Math.random() * 5 + 5;
+
+            snowflake.style.animationDuration =
+                duration + "s";
+
+            snowContainer.appendChild(snowflake);
+
+            setTimeout(function() {
+
+                snowflake.remove();
+
+            }, duration * 1000);
+
+        }
+
+        setInterval(createSnowflake, 180);
+
+    </script>
+
+</body>
+
+</html>
